@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>Test NextGrowth</title>
+  </head>
+  <body>
+    <div class="tbl">
+      <table id="myTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date de creation</th>
+            <th>Etat</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Nom d'utilisateur</th>
+            <th>Matricule</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="btn">
+      <button id="myBtn" >Ajouter utilisateur</button>
+    </div>
+    
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div>
+          <span class="textSpan">Ajout d'utilisateurs</span>
+        </div>
+        
+       <!-- <span class="close">&times;</span>  --> 
+      
+        <div style="display: flex;">
+          <div style="flex: 1;">
+              <label>Nom :</label>
+              <input type="text" name="lastName" />
+          </div>
+          <div style="flex: 1;">
+              <label>Prenom :</label>
+              <input type="text" name="firstName" />
+          </div>
+          <div style="flex: 1;">
+              <label>Etat :</label>
+              <select id="state">
+                  <option value="rejected">Rejeté</option>
+                  <option value="valid">Validé</option>
+                  <option value="in_validation">En validation</option>
+              </select>
+          </div>
+      </div>
+      
+      <div style="display: flex;">
+          <div style="flex: 1;">
+              <label>Nom d'utilisateur :</label>
+              <input type="text" name="name_of_user" />
+          </div>
+          <div style="flex: 1;">
+              <label>Date de creation :</label>
+              <input type="date" name="date_creatioon" />
+          </div>
+          <div style="flex: 1;"></div>
+      </div>
+      
+      <div style="display: flex;">
+          <div style="flex: 1;">
+              <label>Matricul :</label>
+              <input type="text" name="matriculation" />
+          </div>
+          <div style="flex: 1;"></div>
+          <div style="flex: 1; align-self: flex-end;">
+              <button id="addUserId" onclick="addNewUser()">
+                  Enregistrer
+              </button>
+          </div>
+      </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      let version = navigator.appVersion;
+
+      let users = [
+        {
+          id: "123456789",
+          createdDate: "2021-01-06T00:00:00.000Z",
+          status: "En validation",
+          firstName: "Mohamed",
+          lastName: "Taha",
+          userName: "mtaha",
+          registrationNumber: "2584",
+        },
+        {
+          id: "987654321",
+          createdDate: "2021-07-25T00:00:00.000Z",
+          status: "Validé",
+          firstName: "Hamid",
+          lastName: "Orrich",
+          userName: "horrich",
+          registrationNumber: "1594",
+        },
+        {
+          id: "852963741",
+          createdDate: "2021-09-15T00:00:00.000Z",
+          status: "Rejeté",
+          firstName: "Rachid",
+          lastName: "Mahidi",
+          userName: "rmahidi",
+          registrationNumber: "3576",
+        },
+      ];
+
+      insertUsers();
+      function addNewUser() {
+        let user = {};
+        user.id =
+          users.length == 0 ? 1 : parseInt(users[users.length - 1].id) + 1;
+        user.createdDate =
+          document.getElementsByName("date_creatioon")[0].value;
+        let st = document.getElementById("state");
+        let stt = st.options[st.selectedIndex].text;
+        user.status = stt;
+        user.firstName = document.getElementsByName("firstName")[0].value;
+        user.lastName = document.getElementsByName("lastName")[0].value;
+        user.userName = document.getElementsByName("name_of_user")[0].value;
+        user.registrationNumber =
+          document.getElementsByName("matriculation")[0].value;
+
+        users.push(user);
+   
+        insertUsers();
+        modal.style.display = "none";
+      }
+
+      function insertUsers() {
+        let myTable = document
+          .getElementById("myTable")
+          .getElementsByTagName("tbody")[0];
+        myTable.innerHTML = "";
+        for (let i = 0; i < users.length; i++) {
+          let row = myTable.insertRow();
+          row.setAttribute("id", "row_" + i);
+          let cell1 = row.insertCell(0);
+          let cell2 = row.insertCell(1);
+          let cell3 = row.insertCell(2);
+          let cell4 = row.insertCell(3);
+          let cell5 = row.insertCell(4);
+          let cell6 = row.insertCell(5);
+          let cell7 = row.insertCell(6);
+          let cell8 = row.insertCell(7);
+          console.log("cell1 : ",row)
+          cell1.innerHTML = users[i].id;
+          cell2.innerHTML = new Date(users[i].createdDate).toLocaleDateString(
+            "fr"
+          );
+
+          cell4.innerHTML = users[i].firstName;
+          cell5.innerHTML = users[i].lastName;
+          cell6.innerHTML = users[i].userName;
+          cell7.innerHTML = users[i].registrationNumber;
+          cell8.innerHTML =
+            '<img height="20" onClick="deleteRow(' +
+            i +
+            ')" src="img/delete.png" class="delete"/>';
+          if (users[i].status == "Rejeté") {
+            cell3.innerHTML =
+              '<span class="rejected">' + users[i].status + "</span>";
+          } else if (users[i].status == "Validé") {
+            cell3.innerHTML =
+              '<span class="valide">' + users[i].status + "</span>";
+          } else {
+            cell3.innerHTML =
+              '<span class="on-validation">' + users[i].status + "</span>";
+          }
+        }
+      }
+
+      function deleteRow(i) {
+        if(users.length===1) {
+          users=[]
+        } else {
+          users.splice(i, 1);
+          document.getElementById("row_" + i).remove();
+        }
+        
+      }
+      var modal = document.getElementById("myModal");
+
+      
+      var btn = document.getElementById("myBtn");
+
+      
+      var span = document.getElementsByClassName("close")[0];
+      var id_add_user = document.getElementById('addUserId') 
+      
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+
+ 
+   window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
