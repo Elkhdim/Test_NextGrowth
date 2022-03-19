@@ -120,3 +120,14 @@ select {
   text-decoration: none;
   cursor: pointer;
 }
+
+.divParent {
+    display: flex;
+}
+.divChild {
+    flex: 1;
+}
+.lastdivChild {
+    flex: 1; 
+    align-self: flex-end;
+}

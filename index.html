@@ -38,16 +38,16 @@
         
        <!-- <span class="close">&times;</span>  --> 
       
-        <div style="display: flex;">
-          <div style="flex: 1;">
+        <div class="divParent">
+          <div class="divChild">
               <label>Nom :</label>
               <input type="text" name="lastName" />
           </div>
-          <div style="flex: 1;">
+          <div class="divChild">
               <label>Prenom :</label>
               <input type="text" name="firstName" />
           </div>
-          <div style="flex: 1;">
+          <div class="divChild">
               <label>Etat :</label>
               <select id="state">
                   <option value="rejected">Rejeté</option>
@@ -57,25 +57,25 @@
           </div>
       </div>
       
-      <div style="display: flex;">
-          <div style="flex: 1;">
+      <div class="divParent">
+          <div class="divChild">
               <label>Nom d'utilisateur :</label>
               <input type="text" name="name_of_user" />
           </div>
-          <div style="flex: 1;">
+          <div class="divChild">
               <label>Date de creation :</label>
               <input type="date" name="date_creatioon" />
           </div>
-          <div style="flex: 1;"></div>
+          <div class="divChild"></div>
       </div>
       
-      <div style="display: flex;">
-          <div style="flex: 1;">
+      <div class="divParent">
+          <div class="divChild">
               <label>Matricul :</label>
               <input type="text" name="matriculation" />
           </div>
-          <div style="flex: 1;"></div>
-          <div style="flex: 1; align-self: flex-end;">
+          <div class="divChild"></div>
+          <div class="lastdivChild">
               <button id="addUserId" onclick="addNewUser()">
                   Enregistrer
               </button>
